@@ -22,7 +22,7 @@
 					<p:inputText id="idyears" value="#{calcBB.years}" />
 					<p:outputLabel for="idinterest" value="Oprocentowanie:"/>
 					<p:inputText id="idinterest" value="#{calcBB.interest}" />
-					<p:commandButton value="Dodaj" action="#{calcBB.calc()}" update="msg" />
+					<p:commandButton value="Oblicz" action="#{calcBB.calc()}" update="msg" />
 				</h:panelGrid>
 				<p:commandLink value="Informacje" action="#{calcBB.info()}" />
 			</h:form>

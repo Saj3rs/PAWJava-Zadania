@@ -88,17 +88,17 @@ public class CalcBB {
 			return false;
 		}
 	}
-
-	// Go to "showresult" if ok
-	public String calc() {
-		if (doTheMath()) {
-			return "showresult";
-		}
-		return null;
-	}
+//stara wersja bez uzycia wbudowanego ajaxa
+	// Go to "showresult" if ok 
+	//public String calc() {
+	//	if (doTheMath()) {
+	//		return "showresult";
+	//	}
+	//	return null;
+	//}
 
 	// Put result in messages on AJAX call
-	public String calc_AJAX() {
+	public String calc() {
 		if (doTheMath()) {
 			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Pelna suma do splacenia: " + full, null));
 			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Miesieczna oplata: " + monthly, null));
