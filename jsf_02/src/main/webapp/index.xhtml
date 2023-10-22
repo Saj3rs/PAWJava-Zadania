@@ -12,17 +12,27 @@
 
 		<p:panel header="Kalkulator">
 
-			<p:messages id="msg" />
+			<p:messages id="msg" severity="info" />
 
-			<h:form>
-				<h:panelGrid columns="2" cellpadding="5" styleClass="bottom-space">
+			<h:form id="form1">
+				<h:panelGrid columns="3" cellpadding="5" styleClass="bottom-space">
 					<p:outputLabel for="idamm" value="Kwota Kredytu:"/>
-					<p:inputText id="idamm" value="#{calcBB.amm}" />
+					<p:inputText id="idamm" value="#{calcBB.amm}" required="true" requiredMessage="Nalezy podac kwote" converterMessage="Kwota musi byc liczba" validatorMessage="Kwota musi byc dodatnia">
+					<f:validateDoubleRange minimum="0.01"/>
+					</p:inputText>
+					<p:messages for="idamm" />
 					<p:outputLabel for="idyears" value="Ilosc lat:"/>
-					<p:inputText id="idyears" value="#{calcBB.years}" />
-					<p:outputLabel for="idinterest" value="Oprocentowanie:"/>
-					<p:inputText id="idinterest" value="#{calcBB.interest}" />
-					<p:commandButton value="Oblicz" action="#{calcBB.calc()}" update="msg" />
+					<p:inputText id="idyears" value="#{calcBB.years}" required="true" requiredMessage="Nalezy podac ilosc lat" converterMessage="Ilosc lat musi byc liczba" validatorMessage="Ilosc lat musi byc dodatnia">
+					<f:validateDoubleRange minimum="0.01"/>
+					</p:inputText>
+					<p:messages for="idyears" />
+					<p:outputLabel for="idinterest" value="Oprocentowanie(%):"/>
+					<p:inputText id="idinterest" value="#{calcBB.interest}" required="true" requiredMessage="Nalezy podac oprocentowanie" converterMessage="Oprocentowanie musi byc liczba" validatorMessage="Oprocentowanie musi byc dodatnie i mniejsze od 100%">
+					<f:validateDoubleRange minimum="0.01" maximum="100.00"/>
+					</p:inputText>
+					<p:messages for="idinterest" />
+					<p:commandButton value="Oblicz" action="#{calcBB.calc()}" update="form1 msg" />
+					
 				</h:panelGrid>
 				<p:commandLink value="Informacje" action="#{calcBB.info()}" />
 			</h:form>

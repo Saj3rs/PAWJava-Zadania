@@ -10,10 +10,10 @@ import jakarta.faces.context.FacesContext;
 @RequestScoped
 //@SessionScoped
 public class CalcBB {
-	private String amm;
-	private String years;
+	private Double amm;
+	private Double years;
 	private Double full;
-	private String interest;
+	private Double interest;
 	private Double monthly;
 	
 	
@@ -23,27 +23,27 @@ public class CalcBB {
 	@Inject
 	FacesContext ctx;
 
-	public String getAmm() {
+	public Double getAmm() {
 		return amm;
 	}
 
-	public void setAmm(String amm) {
+	public void setAmm(Double amm) {
 		this.amm = amm;
 	}
 	
-	public String getYears() {
+	public Double getYears() {
 		return years;
 	}
 
-	public void setYears(String years) {
+	public void setYears(Double years) {
 		this.years = years;
 	}
 	
-	public String getInterest() {
+	public Double getInterest() {
 		return interest;
 	}
 
-	public void setInterest(String interest) {
+	public void setInterest(Double interest) {
 		this.interest = interest;
 	}
 
@@ -66,9 +66,9 @@ public class CalcBB {
 	public boolean doTheMath() {
 		try {
 			
-			double amm = Double.parseDouble(this.amm);
-			double years = Double.parseDouble(this.years);
-			double interest = Double.parseDouble(this.interest)/100;
+			double amm = this.amm;
+			double years = this.years;
+			double interest = this.interest/100;
 			double mYear=years;
 			full=amm;
 			while(years>0){
