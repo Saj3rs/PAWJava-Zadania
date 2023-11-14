@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/application_10.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" version="10" id="Application_ID">
+
+<display-name>BibliotekaEAR</display-name>
+
+
+<module>
+
+
+<web>
+
+<web-uri>BibliotekaWEB.war</web-uri>
+
+<context-root>Biblioteka</context-root>
+
+</web>
+
+</module>
+
+
+<module>
+
+<ejb>BibliotekaEJB.jar</ejb>
+
+</module>
+
+</application>
