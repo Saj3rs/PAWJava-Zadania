@@ -1,6 +1,8 @@
 package com.dao;
 
 import java.util.List;
+
+
 import java.util.Map;
 
 import com.entities.Book;
@@ -57,7 +59,7 @@ public class BookDAO {
 
 		// 1. Build query string with parameters
 		String select = "select p ";
-		String from = "from books p ";
+		String from = "from Book p "; //from NAZWA dao
 		String where = "";
 		String orderby = "order by p.tytul asc, p.gatunek";
 

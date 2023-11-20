@@ -20,14 +20,14 @@ import com.entities.Book;
 public class BookEditBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final String PAGE_BOOK_LIST = "bookList?faces-redirect=true";
+	private static final String PAGE_BOOK_LIST = "bookEdit?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private Book book = new Book();
 	private Book loaded = null;
 
 	@EJB
-	BookDAO BookDAO;
+	BookDAO bookDAO;
 
 	@Inject
 	FacesContext context;
@@ -70,9 +70,9 @@ public class BookEditBB implements Serializable {
 		try {
 			if (book.getIdBook() == null) {
 				// new record
-				BookDAO.create(book);
+				bookDAO.create(book);
 				// existing record
-				BookDAO.merge(book);
+				bookDAO.merge(book);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

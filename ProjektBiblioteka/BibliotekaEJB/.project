@@ -3,6 +3,8 @@
 	<name>BibliotekaEJB</name>
 	<comment></comment>
 	<projects>
+		<project>BibliotekaEAR</project>
+		<project>BibliotekaWEB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
