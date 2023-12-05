@@ -19,7 +19,7 @@ import com.entities.Book;
 @Named
 @RequestScoped
 public class BookListBB {
-	private static final String PAGE_PERSON_EDIT = "bookList?faces-redirect=true";
+	private static final String PAGE_BOOK_EDIT = "bookEdit?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private String tytul;
@@ -74,7 +74,7 @@ public class BookListBB {
 		//2. Pass object through flash	
 		flash.put("book", book);
 		
-		return PAGE_PERSON_EDIT;
+		return PAGE_BOOK_EDIT;
 	}
 
 	public String editBook(Book book){
@@ -85,7 +85,7 @@ public class BookListBB {
 		//2. Pass object through flash 
 		flash.put("book", book);
 		
-		return PAGE_PERSON_EDIT;
+		return PAGE_BOOK_EDIT;
 	}
 
 	public String deleteBook(Book book){

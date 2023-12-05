@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<f:metadata>
+    <f:viewAction action="#{bookEditBB.onLoad()}" />
+</f:metadata>
+
+<h:head>
+	<meta charset="utf-8"/>
+	<title>Record Edition Page</title>
+</h:head>
+
+<h:body>
+
+	<p:panel toggleable="true" header="Edycja rekordu">
+
+		<h:form rendered="#{bookEditBB.book != null}">
+			<h:panelGrid columns="3" cellpadding="5">
+
+				<h:outputLabel for="p-id" value="id:" />
+				<p:inputText id="p-id" value="#{bookEditBB.book.idBook}"
+					required="true" requiredMessage="Podaj id">
+				</p:inputText>
+				<p:message for="p-id" display="icon"/>
+
+				<h:outputLabel for="p-tytul" value="tytul:" />
+				<p:inputText id="p-tytul" value="#{bookEditBB.book.tytul}"
+					required="true" requiredMessage="Podaj tytul">
+				</p:inputText>
+				<p:message for="p-tytul" display="icon"/>
+
+				<h:outputLabel for="p-gatunek" value="gatunek:" />
+				<p:inputText id="p-gatunek" value="#{bookEditBB.book.gatunek}">
+				</p:inputText>
+				<p:message for="p-gatunek" display="icon"/>
+				</h:panelGrid>
+
+			<p:messages id="msgs" />
+
+			<p:commandButton value="Zapisz" action="#{bookEditBB.saveData()}"
+				style="margin-right: 1em;" update="@form" />
+
+			<p:button value="Anuluj" outcome="index" />
+		</h:form>
+
+	</p:panel>
+
+</h:body>
+</html>

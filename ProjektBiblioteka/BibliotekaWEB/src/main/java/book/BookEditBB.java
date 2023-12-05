@@ -20,9 +20,9 @@ import com.entities.Book;
 public class BookEditBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final String PAGE_BOOK_LIST = "bookEdit?faces-redirect=true";
+	private static final String PAGE_BOOK_LIST = "index?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
-
+ 
 	private Book book = new Book();
 	private Book loaded = null;
 
@@ -59,6 +59,7 @@ public class BookEditBB implements Serializable {
 			// }
 		}
 
+
 	}
 
 	public String saveData() {
@@ -73,14 +74,18 @@ public class BookEditBB implements Serializable {
 				bookDAO.create(book);
 				// existing record
 				bookDAO.merge(book);
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "did savedata", null));
+
+				return PAGE_BOOK_LIST;
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			context.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "wystąpił błąd podczas zapisu", null));
-			return PAGE_STAY_AT_THE_SAME;
 		}
+		return PAGE_STAY_AT_THE_SAME;
 
-		return PAGE_BOOK_LIST;
+		
 	}
 }

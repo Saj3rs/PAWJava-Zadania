@@ -28,7 +28,7 @@
 			action="#{bookListBB.newBook()}" style="margin-bottom:1em;" />
 
 		<p:dataTable value="#{bookListBB.list}" var="p">
-			
+
 			<p:column priority="6">
 				<f:facet name="header">
 					<h:outputText value="Id" />
@@ -55,10 +55,10 @@
 					<h:outputText value="opcje" />
 				</f:facet>
 
-				<p:commandButton style="margin-right:1%" value="Edytuj"
+				<p:commandButton value="Edytuj"
 					action="#{bookListBB.editBook(p)}" />
 
-				<p:commandButton style="margin-right:1%" value="Usuń"
+				<p:commandButton value="Usuń"
 					action="#{bookListBB.deleteBook(p)}" update="@form" />
 
 				

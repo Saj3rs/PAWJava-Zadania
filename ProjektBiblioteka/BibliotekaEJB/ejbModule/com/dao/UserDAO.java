@@ -5,88 +5,85 @@ import java.util.List;
 
 import java.util.Map;
 
-import com.entities.Book;
+import com.entities.User;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
-//DAO - Data Access Object for Book entity
+//DAO - Data Access Object for User entity
 //Designed to serve as an interface between higher layers of application and data.
 //Implemented as stateless Enterprise Java bean - server side code that can be invoked even remotely.
 
 @Stateless
-public class BookDAO {
+public class UserDAO {
 	private final static String UNIT_NAME = "BibliotekaPU"; //Don't know what this value changes
 
 	// Dependency injection (no setter method is needed)
 	@PersistenceContext(unitName = UNIT_NAME)
 	protected EntityManager em;
 
-	public void create(Book Book) {
-		em.persist(Book);
+	public void create(User User) {
+		em.persist(User);
 	}
 
-	public Book merge(Book Book) {
-		return em.merge(Book);
+	public User merge(User User) {
+		return em.merge(User);
 	}
 
-	public void remove(Book Book) {
-		em.remove(em.merge(Book));
+	public void remove(User User) {
+		em.remove(em.merge(User));
 	}
 
-	public Book find(Object idBook) {
-		return em.find(Book.class, idBook);
+	public User find(Object id_user) {
+		return em.find(User.class, id_user);
 	}
 
-	public List<Book> getFullList() {
-		List<Book> list = null;
-
-		Query query = em.createQuery("select p from Book p");
-
-		try {
-			list = query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-
-	public List<Book> getList(Map<String, Object> searchParams) {
-		List<Book> list = null;
+	public List<User> validateLogin(Map<String, Object> searchParams) {
+		List<User> list = null;
 
 		// 1. Build query string with parameters
 		String select = "select p ";
-		String from = "from Book p "; //from NAZWA dao
+		String from = "from User p "; //from NAZWA dao
 		String where = "";
-		String orderby = "order by p.tytul asc, p.gatunek";
 
-		// search for tytul
-		String tytul = (String) searchParams.get("tytul");
-		if (tytul != null) {
+		// search for login
+		String login = (String) searchParams.get("login");
+		if (login != null) {
 			if (where.isEmpty()) {
 				where = "where ";
 			} else {
 				where += "and ";
 			}
-			where += "p.tytul like :tytul ";
+			where += "p.login = login ";
+		}
+		String haslo = (String) searchParams.get("haslo");
+		if (login != null) {
+			if (where.isEmpty()) {
+				where = "where ";
+			} else {
+				where += "and ";
+			}
+			where += "p.haslo = :haslo ";
 		}
 		
 		// ... other parameters ... 
 
 		// 2. Create query object
-		Query query = em.createQuery(select + from + where + orderby);
+		Query query = em.createQuery(select + from + where);
 
 		// 3. Set configured parameters
-		if (tytul != null) {
-			query.setParameter("tytul", tytul+"%");
+		if (login != null) {
+			query.setParameter("login", login+"%");
+		}
+		if (haslo != null) {
+			query.setParameter("haslo", haslo+"%");
 		}
 
 		// ... other parameters ... 
 
-		// 4. Execute query and retrieve list of Book objects
+		// 4. Execute query and retrieve list of User objects
 		try {
 			list = query.getResultList();
 		} catch (Exception e) {
@@ -95,5 +92,7 @@ public class BookDAO {
 
 		return list;
 	}
+	
+	
 
 }
