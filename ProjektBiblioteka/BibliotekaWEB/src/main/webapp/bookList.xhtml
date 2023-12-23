@@ -49,6 +49,21 @@
 				</f:facet>
 				<h:outputText value="#{p.gatunek}" />
 			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Dostepna" />
+				</f:facet>
+				<h:outputText value="NieDostepna" />
+				<f:choose>
+				    <f:when test="#{p.user == NULL}">
+				        <h:outputText value="Dostepna" />
+				    </f:when>
+				    <f:otherwise>
+			        	<h:outputText value="NieDostepna" />
+			  	  </f:otherwise>
+				</f:choose>
+			</p:column>
 
 			<p:column>
 				<f:facet name="header">

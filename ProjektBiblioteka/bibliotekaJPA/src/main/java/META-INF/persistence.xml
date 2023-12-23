@@ -6,6 +6,11 @@
 	<persistence-unit name="bibliotekaPU"
 		transaction-type="JTA">
 		<jta-data-source>java:/biblioteka</jta-data-source>
+		<class>entities.Author</class>
+		<class>entities.Book</class>
+		<class>entities.Reservation</class>
+		<class>entities.Role</class>
+		<class>entities.User</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect"

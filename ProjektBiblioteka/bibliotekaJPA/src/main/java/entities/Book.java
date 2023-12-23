@@ -1,8 +1,8 @@
-package com.entities;
+package entities;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
-//import java.util.List;
+import javax.persistence.*;
+
 
 /**
  * The persistent class for the books database table.
@@ -15,9 +15,9 @@ public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_book")
-	private Integer idBook;
+	private int idBook;
 
 	private String gatunek;
 
@@ -28,19 +28,20 @@ public class Book implements Serializable {
 	@JoinColumn(name="id_author")
 	private Author author;
 
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="id_user")
-	private User user;
-	
+	//bi-directional many-to-one association to Reservation
 	@ManyToOne
 	@JoinColumn(name="id_reservation")
 	private Reservation reservation;
 
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="id_user")
+	private User user;
+
 	public Book() {
 	}
 
-	public Integer getIdBook() {
+	public int getIdBook() {
 		return this.idBook;
 	}
 
@@ -72,14 +73,6 @@ public class Book implements Serializable {
 		this.author = author;
 	}
 
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
 	public Reservation getReservation() {
 		return this.reservation;
 	}
@@ -87,11 +80,13 @@ public class Book implements Serializable {
 	public void setReservation(Reservation reservation) {
 		this.reservation = reservation;
 	}
-	public int checkAvailable() {
-		if(user!=null){return 2;}
-		else if (reservation !=null) {return 1;}
-		else {return 0;}
-		
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

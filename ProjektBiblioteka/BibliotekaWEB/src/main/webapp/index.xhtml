@@ -49,6 +49,17 @@
 				</f:facet>
 				<h:outputText value="#{p.gatunek}" />
 			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Dostepnosc" />
+				</f:facet>
+				
+				<h:outputText rendered="#{p.checkAvailable() ==2}" value="Wypozyczona " />
+				<h:outputText rendered="#{p.checkAvailable() ==1}" value=" Zarezerwowana do #{p.reservation.end}" />
+				<h:outputText rendered="#{p.checkAvailable() ==0}" value=" Dostepna" />
+			
+			</p:column>
 
 			<p:column>
 				<f:facet name="header">

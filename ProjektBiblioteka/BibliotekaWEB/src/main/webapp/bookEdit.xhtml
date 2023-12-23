@@ -23,11 +23,7 @@
 		<h:form rendered="#{bookEditBB.book != null}">
 			<h:panelGrid columns="3" cellpadding="5">
 
-				<h:outputLabel for="p-id" value="id:" />
-				<p:inputText id="p-id" value="#{bookEditBB.book.idBook}"
-					required="true" requiredMessage="Podaj id">
-				</p:inputText>
-				<p:message for="p-id" display="icon"/>
+			
 
 				<h:outputLabel for="p-tytul" value="tytul:" />
 				<p:inputText id="p-tytul" value="#{bookEditBB.book.tytul}"

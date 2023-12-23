@@ -1,4 +1,4 @@
-package com.entities;
+package entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
@@ -18,6 +18,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_user")
 	private int idUser;
 
@@ -36,13 +37,14 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="user")
 	private List<Book> books;
 
+	//bi-directional many-to-one association to Reservation
+	@OneToMany(mappedBy="user")
+	private List<Reservation> reservations;
+
 	//bi-directional many-to-one association to Role
 	@ManyToOne
 	@JoinColumn(name="id_role")
 	private Role role;
-	
-	@OneToMany(mappedBy="user")
-	private List<Reservation> reservations;
 
 	public User() {
 	}
@@ -117,14 +119,6 @@ public class User implements Serializable {
 		return book;
 	}
 
-	public Role getRole() {
-		return this.role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-	
 	public List<Reservation> getReservations() {
 		return this.reservations;
 	}
@@ -147,5 +141,12 @@ public class User implements Serializable {
 		return reservation;
 	}
 
-	
+	public Role getRole() {
+		return this.role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 }

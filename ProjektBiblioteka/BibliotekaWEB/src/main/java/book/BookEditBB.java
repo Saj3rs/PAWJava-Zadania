@@ -72,6 +72,8 @@ public class BookEditBB implements Serializable {
 			if (book.getIdBook() == null) {
 				// new record
 				bookDAO.create(book);
+				return PAGE_BOOK_LIST;
+			}else {
 				// existing record
 				bookDAO.merge(book);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "did savedata", null));
