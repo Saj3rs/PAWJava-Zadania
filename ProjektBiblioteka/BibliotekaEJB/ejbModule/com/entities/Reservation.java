@@ -4,8 +4,8 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
-
-
+import java.time.LocalDateTime;  
+import java.time.format.DateTimeFormatter;  
 
 /**
  * The persistent class for the reservations database table.
@@ -20,7 +20,7 @@ public class Reservation implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_reservation")
-	private int idReservation;
+	private Integer idReservation;
 
 	@Temporal(TemporalType.DATE)
 	private Date beginning;
@@ -40,7 +40,7 @@ public class Reservation implements Serializable {
 	public Reservation() {
 	}
 
-	public int getIdReservation() {
+	public Integer getIdReservation() {
 		return this.idReservation;
 	}
 
@@ -92,6 +92,17 @@ public class Reservation implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	
+	public void newReservation(User user) {
+		this.setUser(user);
+	
+		Date start = new java.util.Date();
+		Date end = new Date(start.getTime() + (86400000*7)); //Current time + (day milliseconds * days) 
+		this.setBeginning(start);
+		this.setEnd(end);
+		
 	}
 
 }

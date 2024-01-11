@@ -18,6 +18,7 @@ import jakarta.persistence.Query;
 
 @Stateless
 public class UserDAO {
+	
 	private final static String UNIT_NAME = "BibliotekaPU"; //Don't know what this value changes
 
 	// Dependency injection (no setter method is needed)
@@ -40,8 +41,8 @@ public class UserDAO {
 		return em.find(User.class, id_user);
 	}
 
-	public List<User> validateLogin(Map<String, Object> searchParams) {
-		List<User> list = null;
+	public User validateLogin(Map<String, Object> searchParams) {
+		User answ = null;
 
 		// 1. Build query string with parameters
 		String select = "select p ";
@@ -85,14 +86,23 @@ public class UserDAO {
 
 		// 4. Execute query and retrieve list of User objects
 		try {
-			list = query.getResultList();
+			answ = (User) query.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return list;
+		return answ;
 	}
 	
+	public User simpleValidate(Integer id_user) {
+		User u = null;
+		User t = this.find(id_user);
+		if(t!=null) {
+			
+		}
+		
+		return u;
+	}
 	
 
 }

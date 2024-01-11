@@ -72,6 +72,10 @@
 				<p:commandButton style="margin-right:1%" value="Usuń"
 					action="#{bookListBB.deleteBook(p)}" update="@form" />
 
+					<p:commandButton rendered="#{p.checkAvailable() ==0}" value="zarezerwuj"
+					action="#{bookBB.reserveBook(p)}" />
+					<p:commandButton rendered="#{p.checkAvailable() !=0}" disabled="#{p.checkAvailable() !=0}" value="zarezerwuj"
+					 />
 				
 			</p:column>
 

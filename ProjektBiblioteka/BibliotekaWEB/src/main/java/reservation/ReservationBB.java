@@ -1,4 +1,4 @@
-package book;
+package reservation;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -12,22 +12,23 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
 
-import com.dao.BookDAO;
+import com.dao.ReservationDAO;
+import com.entities.Reservation;
 import com.entities.Book;
 
 @Named
 @ViewScoped
-public class BookEditBB implements Serializable {
+public class ReservationBB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final String PAGE_BOOK_LIST = "index?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
  
-	private Book book = new Book();
+	private Reservation reservation = new Reservation();
 	private Book loaded = null;
 
 	@EJB
-	BookDAO bookDAO;
+	ReservationDAO reservationDAO;
 
 	@Inject
 	FacesContext context;
@@ -35,26 +36,31 @@ public class BookEditBB implements Serializable {
 	@Inject
 	Flash flash;
 
-	public Book getBook() {
-		return book;
+	public Reservation getReservation() {
+		return reservation;
 	}
 
+	public void	reserve() {
+		reservation.newReservation(currentUser);
+		
+	}
+	
 	public void onLoad() throws IOException {
-		// 1. load Book passed through session
+		// 1. load Reservation passed through session
 		// HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		// loaded = (Book) session.getAttribute("Book");
+		// loaded = (Reservation) session.getAttribute("Reservation");
 
-		// 2. load Book passed through flash
+		// 2. load Reservation passed through flash
 		loaded = (Book) flash.get("book");
 
 		// cleaning: attribute received => delete it from session
 		if (loaded != null) {
-			book = loaded;
+			reservation = loaded;
 			// session.removeAttribute("person");
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błędne użycie systemu", null));
 			// if (!context.isPostback()) { //possible redirect
-			// context.getExternalContext().redirect("BookList.xhtml");
+			// context.getExternalContext().redirect("ReservationList.xhtml");
 			// context.responseComplete();
 			// }
 		}
@@ -63,19 +69,19 @@ public class BookEditBB implements Serializable {
 	}
 
 	public String saveData() {
-		// no Book object passed
+		// no Reservation object passed
 		if (loaded == null) {
 			return PAGE_STAY_AT_THE_SAME;
 		}
 
 		try {
-			if (book.getIdBook() == null) {
+			if (reservation.getIdReservation() == null) {
 				// new record
-				bookDAO.create(book);
+				reservationDAO.create(reservation);
 				return PAGE_BOOK_LIST;
 			}else {
 				// existing record
-				bookDAO.merge(book);
+				reservationDAO.merge(reservation);
 				//context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "did savedata", null));
 
 				return PAGE_BOOK_LIST;

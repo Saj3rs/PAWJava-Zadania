@@ -50,8 +50,8 @@ public class UserLoginBB {
 		this.haslo = haslo;
 	}
 
-	public List<User> getList(){
-		List<User> list = null;
+	private User getUser(){
+		User list = null;
 		
 		//1. Prepare search params
 		Map<String,Object> searchParams = new HashMap<String, Object>();
@@ -87,17 +87,17 @@ public class UserLoginBB {
 
 	}
 
-	public String editUser(User user){
+	//public String editUser(User user){
 		//1. Pass object through session
 		//HttpSession session = (HttpSession) extcontext.getSession(true);
 		//session.setAttribute("user", user);
 		
 		//2. Pass object through flash 
-		flash.put("user", user);
+		//flash.put("user", user);
 		
-		return PAGE_STAY_AT_THE_SAME;
+		//return PAGE_STAY_AT_THE_SAME;
 
-	}
+	//}
 
 	public String deleteUser(User user){
 		UserDAO.remove(user);

@@ -14,6 +14,8 @@ import jakarta.faces.context.Flash;
 ///import jakarta.servlet.http.HttpSession;
 
 import com.dao.BookDAO;
+import reservation.ReservationBB;
+
 import com.entities.Book;
 
 @Named
@@ -21,6 +23,8 @@ import com.entities.Book;
 public class BookListBB {
 	private static final String PAGE_BOOK_EDIT = "bookEdit?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
+	private static final String PAGE_RESERVATION = "bookReservation?faces-redirect=true";
+
 
 	private String tytul;
 		
@@ -92,4 +96,14 @@ public class BookListBB {
 		BookDAO.remove(book);
 		return PAGE_STAY_AT_THE_SAME;
 	}
+	//public String reserveBook(Book book){
+		//ReservationBB.reserve();
+		//flash.put("book", book);
+		//flash.put
+		
+	//	return PAGE_RESERVATION;
+	//}
+	
+	
+	
 }

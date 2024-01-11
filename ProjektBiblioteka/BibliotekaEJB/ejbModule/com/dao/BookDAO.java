@@ -39,10 +39,14 @@ public class BookDAO {
 	public Book find(Object idBook) {
 		return em.find(Book.class, idBook);
 	}
+	
+	public void reserve(Book Book) {
+		
+		//Book.setReservation();
+	}
 
 	public List<Book> getFullList() {
 		List<Book> list = null;
-
 		Query query = em.createQuery("select p from Book p");
 
 		try {
