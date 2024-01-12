@@ -3,6 +3,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
+		<ui:define name="loginPanel">
 	
 <p:panel header="login" toggleable="true" collapsed="true">
 		<h:form>
@@ -13,22 +14,23 @@
 
 					<h:outputLabel for="p-nr" value="Nr Karty Bibliotecznej" />
 					<p:inputText id="p-nr"
-						required="true" requiredMessage="Podaj nr karty">
+						required="true" requiredMessage="Podaj nr karty" value="#{userLoginBB.nr}">
 					</p:inputText>
 					<p:message for="p-nr" display="icon"/>
 	
-					<h:outputLabel for="p-haslo" value="Haslo" />
-					<p:inputText id="p-haslo" >
+					<h:outputLabel for="p-haslo"  />
+					<p:inputText id="p-haslo" value="#{userLoginBB.haslo}">
 					</p:inputText>
 					<p:message for="p-haslo" display="icon"/>
 				</h:panelGrid>
 
 				<p:messages id="msgs" />
 
-				<p:commandButton value="Zaloguj" action="#{UserLoginBB.}" ///////////////////////////////////
+				<p:commandButton value="Zaloguj" update="mainheader" 
 				style="margin-right: 1em;"  />
 
 				<p:button value="Anuluj" outcome="index" />
 		</h:form>
 		</p:panel>
+	</ui:define>
 </ui:composition>

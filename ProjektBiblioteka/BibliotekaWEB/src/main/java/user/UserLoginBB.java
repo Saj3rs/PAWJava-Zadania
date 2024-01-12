@@ -22,8 +22,9 @@ public class UserLoginBB {
 	//private static final String PAGE_User_Login = "logged?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
-	private String login;
+	private Integer nr;
 	private String haslo;
+	private 
 		
 	@Inject
 	ExternalContext extcontext;
@@ -34,12 +35,12 @@ public class UserLoginBB {
 	@EJB
 	UserDAO UserDAO;
 		
-	public String getLogin() {
-		return login;
+	public Integer getNr() {
+		return nr;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setNr(Integer nr) {
+		this.nr = nr;
 	}
 
 	public String getHaslo() {
@@ -50,14 +51,14 @@ public class UserLoginBB {
 		this.haslo = haslo;
 	}
 
-	private User getUser(){
-		User list = null;
+	public User getUser(){
+		User u = null;
 		
 		//1. Prepare search params
 		Map<String,Object> searchParams = new HashMap<String, Object>();
 		
-		if (login != null && login.length() > 0){
-			searchParams.put("login", login);
+		if (nr != null && nr >= 0){
+			searchParams.put("nr", nr);
 			
 		} 
 		if (haslo != null && haslo.length() > 0){
@@ -66,11 +67,11 @@ public class UserLoginBB {
 		} 
 		
 		//2. Get list
-			list = UserDAO.validateLogin(searchParams);
+			u = UserDAO.validateLogin(searchParams);
 		
 		
 		
-		return list;
+		return u;
 	}
 	
 	public String newUser(){
@@ -104,3 +105,4 @@ public class UserLoginBB {
 		return PAGE_STAY_AT_THE_SAME;
 	}
 }
+

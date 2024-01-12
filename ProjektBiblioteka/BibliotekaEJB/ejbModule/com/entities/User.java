@@ -19,7 +19,7 @@ public class User implements Serializable {
 
 	@Id
 	@Column(name="id_user")
-	private int idUser;
+	private Integer idUser;
 
 	@Temporal(TemporalType.DATE)
 	private Date data_utworzenia;

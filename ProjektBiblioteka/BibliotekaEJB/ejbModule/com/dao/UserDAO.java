@@ -50,8 +50,8 @@ public class UserDAO {
 		String where = "";
 
 		// search for login
-		String login = (String) searchParams.get("login");
-		if (login != null) {
+		String nr = (String) searchParams.get("nr");
+		if (nr != null) {
 			if (where.isEmpty()) {
 				where = "where ";
 			} else {
@@ -60,7 +60,7 @@ public class UserDAO {
 			where += "p.login = login ";
 		}
 		String haslo = (String) searchParams.get("haslo");
-		if (login != null) {
+		if (haslo != null) {
 			if (where.isEmpty()) {
 				where = "where ";
 			} else {
@@ -76,7 +76,7 @@ public class UserDAO {
 
 		// 3. Set configured parameters
 		if (login != null) {
-			query.setParameter("login", login+"%");
+			query.setParameter("id_user", nr+"%");
 		}
 		if (haslo != null) {
 			query.setParameter("haslo", haslo+"%");
