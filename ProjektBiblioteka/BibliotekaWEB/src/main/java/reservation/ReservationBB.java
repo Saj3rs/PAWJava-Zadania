@@ -41,32 +41,35 @@ public class ReservationBB implements Serializable {
 	}
 
 	public void	reserve() {
+		// User currentUser = (User) flash.get("cUser");
+		//HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
+		//Integer cUserId = (Integer) session.getAttribute("cUserId");
 		reservation.newReservation(currentUser);
 		
 	}
 	
-	public void onLoad() throws IOException {
+	//public void onLoad() throws IOException {
 		// 1. load Reservation passed through session
-		// HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-		// loaded = (Reservation) session.getAttribute("Reservation");
+		// HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
+		//loaded = (Reservation) session.getAttribute("Reservation");
 
 		// 2. load Reservation passed through flash
-		loaded = (Book) flash.get("book");
+	//	loaded = (Book) flash.get("book");
 
 		// cleaning: attribute received => delete it from session
-		if (loaded != null) {
-			reservation = loaded;
+		//if (loaded != null) {
+		//	reservation = loaded;
 			// session.removeAttribute("person");
-		} else {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błędne użycie systemu", null));
+	//	} else {
+	//		context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błędne użycie systemu", null));
 			// if (!context.isPostback()) { //possible redirect
 			// context.getExternalContext().redirect("ReservationList.xhtml");
 			// context.responseComplete();
 			// }
-		}
+		//}
 
 
-	}
+	//}
 
 	public String saveData() {
 		// no Reservation object passed

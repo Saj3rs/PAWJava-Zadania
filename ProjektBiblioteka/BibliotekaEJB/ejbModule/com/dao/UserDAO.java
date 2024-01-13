@@ -37,7 +37,7 @@ public class UserDAO {
 		em.remove(em.merge(User));
 	}
 
-	public User find(Object id_user) {
+	public User find(Integer id_user) {
 		return em.find(User.class, id_user);
 	}
 
@@ -57,7 +57,7 @@ public class UserDAO {
 			} else {
 				where += "and ";
 			}
-			where += "p.login = login ";
+			where += "p.id_user = :nr ";
 		}
 		String haslo = (String) searchParams.get("haslo");
 		if (haslo != null) {
@@ -75,7 +75,7 @@ public class UserDAO {
 		Query query = em.createQuery(select + from + where);
 
 		// 3. Set configured parameters
-		if (login != null) {
+		if (nr != null) {
 			query.setParameter("id_user", nr+"%");
 		}
 		if (haslo != null) {
@@ -90,7 +90,7 @@ public class UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		return answ;
 	}
 	
@@ -104,5 +104,13 @@ public class UserDAO {
 		return u;
 	}
 	
+	public boolean checkRole(User user) {
+		byte admin = user.getRole().getAdmin();
+		if(admin==1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 }
