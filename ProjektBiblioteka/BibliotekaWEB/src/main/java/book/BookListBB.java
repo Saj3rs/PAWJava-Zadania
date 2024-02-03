@@ -1,5 +1,6 @@
 package book;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,13 +60,20 @@ public class BookListBB {
 			searchParams.put("tytul", tytul);
 			
 		} 
-		
+		//Variable used as Limit of results
+		int amm = 20;
 		//2. Get list
-			list = BookDAO.getList(searchParams);
+			list = BookDAO.getList(searchParams,amm);
 		
 		
 		
 		return list;
+	}
+	
+	public ArrayList<Book> getArrayList(){
+		ArrayList<Book> ArrList = new ArrayList<>(this.getList());
+		
+		return ArrList;
 	}
 
 	public String newBook(){

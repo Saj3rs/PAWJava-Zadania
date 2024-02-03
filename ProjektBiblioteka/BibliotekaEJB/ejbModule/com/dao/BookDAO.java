@@ -99,5 +99,47 @@ public class BookDAO {
 
 		return list;
 	}
+	
+	public List<Book> getList(Map<String, Object> searchParams, int limiter) {
+		List<Book> list = null;
+
+		// 1. Build query string with parameters
+		String select = "select p ";
+		String from = "from Book p "; //from NAZWA dao
+		String where = "";
+		String orderby = "order by p.tytul asc, p.gatunek";
+
+		// search for tytul
+		String tytul = (String) searchParams.get("tytul");
+		if (tytul != null) {
+			if (where.isEmpty()) {
+				where = "where ";
+			} else {
+				where += "and ";
+			}
+			where += "p.tytul like :tytul ";
+		}
+		
+		// ... other parameters ... 
+
+		// 2. Create query object
+		Query query = em.createQuery(select + from + where + orderby);
+
+		// 3. Set configured parameters
+		if (tytul != null) {
+			query.setParameter("tytul", tytul+"%");
+		}
+
+		// ... other parameters ... 
+
+		// 4. Execute query and retrieve list of Book objects
+		try {
+			list = query.setMaxResults(limiter).getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 
 }

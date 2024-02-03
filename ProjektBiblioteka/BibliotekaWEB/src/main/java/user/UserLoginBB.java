@@ -62,6 +62,7 @@ public class UserLoginBB {
 	}
 	
 	public User getUser(){
+		
 		User u = null;
 		
 		//1. Prepare search params
@@ -164,5 +165,7 @@ public class UserLoginBB {
 		session.invalidate();
 		return PAGE_LOGIN;
 	}
+	
+	// EDIT THE PERSISTENCE AND SETUP FILES !!!!!
 }
 

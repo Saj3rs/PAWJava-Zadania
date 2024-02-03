@@ -98,7 +98,7 @@ public class UserDAO {
 		User u = null;
 		User t = this.find(id_user);
 		if(t!=null) {
-			
+			u=t;
 		}
 		
 		return u;
