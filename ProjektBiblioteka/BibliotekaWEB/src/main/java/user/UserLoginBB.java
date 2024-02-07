@@ -22,12 +22,13 @@ import com.entities.User;
 @Named
 @RequestScoped
 public class UserLoginBB {
-	//private static final String PAGE_User_Login = "logged?faces-redirect=true";
+	private static final String PAGE_ADMIN = "/admin/AdminView?faces-redirect=true";
+	private static final String PAGE_LOGGED = "/user/index?faces-redirect=true";
+	private static final String PAGE_ANON = "/index?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private Integer nr;
 	private String haslo;
-	private 
 		
 	@Inject
 	ExternalContext extcontext;
@@ -37,6 +38,7 @@ public class UserLoginBB {
 	
 	@EJB
 	UserDAO UserDAO;
+	
 		
 	public Integer getNr() {
 		return nr;
@@ -54,11 +56,17 @@ public class UserLoginBB {
 		this.haslo = haslo;
 	}
 
-	public User sessionCUser(Integer id) {
+	public User sessionUserById(Integer id) {
 		User u = UserDAO.find(id);
 		HttpSession session = (HttpSession) extcontext.getSession(true);
 		session.setAttribute("cUser", u);
 		return u;
+	}
+	
+	public void sessionUser(User u){
+		HttpSession session = (HttpSession) extcontext.getSession(true);
+		session.setAttribute("cUser", u);
+		//session.setAttribute("Test", "one");
 	}
 	
 	public User getUser(){
@@ -69,7 +77,8 @@ public class UserLoginBB {
 		Map<String,Object> searchParams = new HashMap<String, Object>();
 		
 		if (nr != null && nr >= 0){
-			searchParams.put("nr", nr);
+		
+			searchParams.put("nr", nr.toString());
 			
 		} 
 		if (haslo != null && haslo.length() > 0){
@@ -132,7 +141,7 @@ public class UserLoginBB {
 					"Niepoprawny login lub hasło", null));
 			return PAGE_STAY_AT_THE_SAME;
 		}
-
+		
 		// 3. if logged in: get User roles, save in RemoteClient and store it in session
 		
 		RemoteClient<User> client = new RemoteClient<User>(); //create new RemoteClient
@@ -142,28 +151,38 @@ public class UserLoginBB {
 		
 		if (check) { //save roles in RemoteClient
 				client.getRoles().add("admin");
+				HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
+				client.store(request);
+				this.sessionUser(user);
+				return PAGE_ADMIN;
 		}else {
 				client.getRoles().add("reader");
-
+				HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
+				client.store(request);
+				this.sessionUser(user);
+				//UserSession.setSessioncUser();;
+				return PAGE_LOGGED;
 		}
 		
 	
 		//store RemoteClient with request info in session (needed for SecurityFilter)
-		HttpServletRequest request = (HttpServletRequest) ctx.getExternalContext().getRequest();
-		client.store(request);
+		
 
 		// and enter the system (now SecurityFilter will pass the request)
-		return PAGE_MAIN;
+		
 	}
 	
 	public String doLogout(){
+		
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(true);
 		//Invalidate session
 		// - all objects within session will be destroyed
 		// - new session will be created (with new ID)
 		session.invalidate();
-		return PAGE_LOGIN;
+		
+		//UserSession.endcUser();
+		return PAGE_ANON;
 	}
 	
 	// EDIT THE PERSISTENCE AND SETUP FILES !!!!!

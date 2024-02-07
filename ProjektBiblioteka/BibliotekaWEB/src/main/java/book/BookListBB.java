@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -22,13 +23,13 @@ import com.entities.Book;
 @Named
 @RequestScoped
 public class BookListBB {
-	private static final String PAGE_BOOK_EDIT = "bookEdit?faces-redirect=true";
+	private static final String PAGE_BOOK_EDIT = "/bookEdit?faces-redirect=true";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
-	private static final String PAGE_RESERVATION = "bookReservation?faces-redirect=true";
+	private static final String PAGE_RESERVATION = "/bookReservation?faces-redirect=true";
 
 
 	private String tytul;
-		
+	private List<Book> lazyList;	
 	@Inject
 	ExternalContext extcontext;
 	
@@ -37,7 +38,8 @@ public class BookListBB {
 	
 	@EJB
 	BookDAO BookDAO;
-		
+	
+	
 	public String getTytul() {
 		return tytul;
 	}
@@ -61,10 +63,31 @@ public class BookListBB {
 			
 		} 
 		//Variable used as Limit of results
-		int amm = 20;
+		//int pageSize = 20;
+		//int offset=1;
 		//2. Get list
-			list = BookDAO.getList(searchParams,amm);
+			list = BookDAO.getList(searchParams);
 		
+		
+		
+		return list;
+	}
+	public List<Book> getList(int pageSize,int offset){
+		List<Book> list = null;
+		
+		//1. Prepare search params
+		Map<String,Object> searchParams = new HashMap<String, Object>();
+		
+		if (tytul != null && tytul.length() > 0){
+			searchParams.put("tytul", tytul);
+			
+		} 
+		//Variable used as Limit of results
+		//int pageSize = 20;
+		//int offset=1;
+		//2. Get list
+			list = BookDAO.getList(searchParams,pageSize,offset);
+		this.setLazyList(list);
 		
 		
 		return list;
@@ -112,6 +135,27 @@ public class BookListBB {
 	//	return PAGE_RESERVATION;
 	//}
 	
-	
+	 public List<Book> load(int offset, int pageSize) {
+	        // apply offset & filters
+	        List<Book> Books = this.getList().stream()
+	                .skip(offset)
+	                .limit(pageSize)
+	                .collect(Collectors.toList());
+	        
+	        return Books;
+	    }
+
+	public List<Book> getLazyList() {
+		if(this.lazyList==null) {
+			this.getList(); 
+				return lazyList;
+			
+		}
+		return lazyList;
+	}
+
+	public void setLazyList(List<Book> lazyList) {
+		this.lazyList = lazyList;
+	}
 	
 }

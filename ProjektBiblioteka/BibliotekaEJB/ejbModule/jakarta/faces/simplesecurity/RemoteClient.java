@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpSession;
  */
 public class RemoteClient<T> {
 
-	private String login;
-	private String pass;
+	private String nr;
+	private String haslo;
 	private String name;
 	private String remoteAddr;
 	private String remoteHost;
@@ -34,9 +34,9 @@ public class RemoteClient<T> {
 		this.remotePort = request.getRemotePort();
 	}
 
-	public RemoteClient(String login, String pass, String name, ServletRequest request) {
-		this.login = login;
-		this.pass = pass;
+	public RemoteClient(String nr, String haslo, String name, ServletRequest request) {
+		this.nr = nr;
+		this.haslo = haslo;
 		this.name = name;
 		if (request != null) {
 			this.remoteAddr = request.getRemoteAddr();
@@ -45,20 +45,20 @@ public class RemoteClient<T> {
 		}
 	}
 
-	public String getLogin() {
-		return login;
+	public String getNr() {
+		return nr;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setLogin(String nr) {
+		this.nr = nr;
 	}
 
-	public String getPass() {
-		return pass;
+	public String getHaslo() {
+		return haslo;
 	}
 
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setHaslo(String haslo) {
+		this.haslo = haslo;
 	}
 
 	public String getName() {

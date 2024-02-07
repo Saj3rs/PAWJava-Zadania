@@ -50,14 +50,15 @@ public class UserDAO {
 		String where = "";
 
 		// search for login
-		String nr = (String) searchParams.get("nr");
+		String sNr= (String)  searchParams.get("nr");
+		Integer nr = Integer.valueOf(sNr);
 		if (nr != null) {
 			if (where.isEmpty()) {
 				where = "where ";
 			} else {
 				where += "and ";
 			}
-			where += "p.id_user = :nr ";
+			where += "p.idUser = :idUser ";
 		}
 		String haslo = (String) searchParams.get("haslo");
 		if (haslo != null) {
@@ -68,7 +69,6 @@ public class UserDAO {
 			}
 			where += "p.haslo = :haslo ";
 		}
-		
 		// ... other parameters ... 
 
 		// 2. Create query object
@@ -76,10 +76,10 @@ public class UserDAO {
 
 		// 3. Set configured parameters
 		if (nr != null) {
-			query.setParameter("id_user", nr+"%");
+			query.setParameter("idUser", nr);
 		}
 		if (haslo != null) {
-			query.setParameter("haslo", haslo+"%");
+			query.setParameter("haslo", haslo);
 		}
 
 		// ... other parameters ... 

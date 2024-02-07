@@ -6,7 +6,7 @@
 		
 	
 	<p:panel header="login" toggleable="true" collapsed="true">
-		<h:form>
+		<h:form id="LoginForm">
 	
 				<h:panelGrid columns="3" cellpadding="5">
 	
@@ -18,16 +18,16 @@
 					</p:inputText>
 					<p:message for="p-nr" display="icon"/>
 	
-					<h:outputLabel for="p-haslo"  />
-					<p:inputText id="p-haslo" value="#{userLoginBB.haslo}">
+					<h:outputLabel for="p-haslo" value="Haslo" />
+					<p:inputText id="p-haslo" value="#{userLoginBB.haslo}" required="true" requiredMessage="Podaj haslo">
 					</p:inputText>
 					<p:message for="p-haslo" display="icon"/>
 				</h:panelGrid>
 
 				<p:messages id="msgs" />
 
-				<p:commandButton value="Zaloguj" update="mainheader" 
-				style="margin-right: 1em;"  />
+				<p:commandButton value="Zaloguj" update="LoginForm" 
+				style="margin-right: 1em;" action="#{userLoginBB.doLogin()}"  />
 
 				<p:button value="Anuluj" outcome="index" />
 		</h:form>

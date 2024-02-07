@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 
 import com.dao.ReservationDAO;
 import com.entities.Reservation;
+import com.entities.User;
 import com.entities.Book;
 
 @Named
@@ -41,9 +42,10 @@ public class ReservationBB implements Serializable {
 	}
 
 	public void	reserve() {
+		
 		// User currentUser = (User) flash.get("cUser");
-		//HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
-		//Integer cUserId = (Integer) session.getAttribute("cUserId");
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
+		User currentUser = (User) session.getAttribute("cUser");
 		reservation.newReservation(currentUser);
 		
 	}

@@ -100,7 +100,7 @@ public class BookDAO {
 		return list;
 	}
 	
-	public List<Book> getList(Map<String, Object> searchParams, int limiter) {
+	public List<Book> getList(Map<String, Object> searchParams, int offset,int pageSize) {
 		List<Book> list = null;
 
 		// 1. Build query string with parameters
@@ -134,7 +134,7 @@ public class BookDAO {
 
 		// 4. Execute query and retrieve list of Book objects
 		try {
-			list = query.setMaxResults(limiter).getResultList();
+			list = query.setMaxResults(pageSize).setFirstResult(offset).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

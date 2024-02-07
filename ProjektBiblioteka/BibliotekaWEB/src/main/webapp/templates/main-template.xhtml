@@ -32,12 +32,13 @@
 
 		<p:commandButton value="Dodaj nową ksiazke"
 			action="#{bookListBB.newBook()}" style="margin-bottom:1em;" />
+			<!--POTRZEBNE WYWOLANIE LAZY REKORDOW W JAKIS SPOSOB -->
 
 		<p:dataTable value="#{bookListBB.list}" var="p" paginator="true" rows="5" 
-							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
     	    				rowsPerPageTemplate="5,10,15" selectionMode="single"
-    	 				rowKey="#{p.idBook}" lazy="false">
-		<!-- RowKey wont work witch lazy -->   	
+    	 				 	rowKey="#{p.idBook}" lazy="false">
+		<!-- RowKey wont work witch lazy rowKey="#{p.idBook}" -->   	
 			<p:column priority="6">
 				<f:facet name="header">
 					<h:outputText value="Id" />
@@ -82,7 +83,7 @@
 					action="#{bookListBB.deleteBook(p)}" update="@form" />
 
 					<p:commandButton rendered="#{p.checkAvailable() ==0}" value="zarezerwuj"
-					action="#{bookBB.reserveBook(p)}" />
+					action="#{ReservationBB.reserveBook(p)}" />
 					<p:commandButton rendered="#{p.checkAvailable() !=0}" disabled="#{p.checkAvailable() !=0}" value="zarezerwuj"
 					 />
 				
