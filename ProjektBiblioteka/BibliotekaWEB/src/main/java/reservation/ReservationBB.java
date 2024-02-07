@@ -31,7 +31,7 @@ public class ReservationBB implements Serializable {
  
 	private Reservation reservation = new Reservation();
 	private Book loaded = null;
-	private Reservation checker = new Reservation();
+	private Reservation tempRes = new Reservation();
 	@EJB
 	ReservationDAO reservationDAO;
 	@EJB
@@ -52,8 +52,9 @@ public class ReservationBB implements Serializable {
 		// User currentUser = (User) flash.get("cUser");
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
 		User currentUser = (User) session.getAttribute("cUser");
+		long timer = session.getLastAccessedTime();
 		//context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "usergot"+currentUser.getImie(), null));
-		reservation.newReservation(currentUser);
+		reservation.newReservation(currentUser,timer);
 		
 	}
 	
@@ -73,12 +74,23 @@ public class ReservationBB implements Serializable {
 		bookDAO.merge(book);
 	}
 	
+	public void dropReservation(Book book) {
+		tempRes = book.getReservation();
+		book.setReservation(null);
+		bookDAO.merge(book);
+		this.deleteReservation(tempRes);
+		
+	}
+	public String deleteReservation(Reservation res){
+		reservationDAO.remove(res);
+		return PAGE_STAY_AT_THE_SAME;
+	}
 	public boolean checkOwner(Book book) {
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
 		User currentUser = (User) session.getAttribute("cUser");
-		checker = book.getReservation();
-		if(checker==null) return false;
-		else if(checker.getUser().getIdUser()==currentUser.getIdUser())return true;
+		tempRes = book.getReservation();
+		if(tempRes==null) return false;
+		else if(tempRes.getUser().getIdUser()==currentUser.getIdUser())return true;
 		else return false;
 	}
 	//public void onLoad() throws IOException {

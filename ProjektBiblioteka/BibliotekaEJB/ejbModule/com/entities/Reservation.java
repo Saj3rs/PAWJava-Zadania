@@ -97,13 +97,13 @@ public class Reservation implements Serializable {
 	}
 	
 	
-	public void newReservation(User cUser) {
+	public void newReservation(User cUser,long timer) {
 		
 		this.setUser(cUser);
 		
 		Date start = new java.util.Date();
 		
-		start.setTime(90000000);
+		start.setTime(timer);
 		Date end = new Date(start.getTime() + (86400000*7)); //Current time + (day milliseconds * days) 
 		this.setBeginning(start);
 		this.setEnd(end);
