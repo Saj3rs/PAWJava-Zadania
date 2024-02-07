@@ -2,6 +2,9 @@ package reservation;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import jakarta.ejb.EJB;
 import jakarta.faces.application.FacesMessage;
@@ -12,6 +15,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
 
+import com.dao.BookDAO;
 import com.dao.ReservationDAO;
 import com.entities.Reservation;
 import com.entities.User;
@@ -27,9 +31,11 @@ public class ReservationBB implements Serializable {
  
 	private Reservation reservation = new Reservation();
 	private Book loaded = null;
-
+	private Reservation checker = new Reservation();
 	@EJB
 	ReservationDAO reservationDAO;
+	@EJB
+	BookDAO bookDAO;
 
 	@Inject
 	FacesContext context;
@@ -46,10 +52,35 @@ public class ReservationBB implements Serializable {
 		// User currentUser = (User) flash.get("cUser");
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
 		User currentUser = (User) session.getAttribute("cUser");
+		//context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "usergot"+currentUser.getImie(), null));
 		reservation.newReservation(currentUser);
 		
 	}
 	
+	public void reserveBook(Book book){
+		this.reserve();
+		
+		//ArrayList<Book> test = new ArrayList<Book>();
+		//test.add(book);
+		//List<Book> why = Arrays.asList(book) ;
+		//reservation.setBooks(why);
+		//reservation booklist is not initiated
+		//reservation.addBook(book);
+		//book.setReservation(reservation);
+		
+		this.saveData();
+		book.setReservation(reservation);
+		bookDAO.merge(book);
+	}
+	
+	public boolean checkOwner(Book book) {
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
+		User currentUser = (User) session.getAttribute("cUser");
+		checker = book.getReservation();
+		if(checker==null) return false;
+		else if(checker.getUser().getIdUser()==currentUser.getIdUser())return true;
+		else return false;
+	}
 	//public void onLoad() throws IOException {
 		// 1. load Reservation passed through session
 		// HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
@@ -74,22 +105,21 @@ public class ReservationBB implements Serializable {
 	//}
 
 	public String saveData() {
-		// no Reservation object passed
-		if (loaded == null) {
-			return PAGE_STAY_AT_THE_SAME;
-		}
+		
 
 		try {
 			if (reservation.getIdReservation() == null) {
 				// new record
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "did create", null));
+
 				reservationDAO.create(reservation);
-				return PAGE_BOOK_LIST;
+				return PAGE_STAY_AT_THE_SAME;
 			}else {
 				// existing record
 				reservationDAO.merge(reservation);
-				//context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "did savedata", null));
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "did savedata", null));
 
-				return PAGE_BOOK_LIST;
+				return PAGE_STAY_AT_THE_SAME;
 				
 			}
 		} catch (Exception e) {

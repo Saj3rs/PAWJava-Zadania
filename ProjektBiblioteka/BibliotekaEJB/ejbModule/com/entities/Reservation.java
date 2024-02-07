@@ -4,6 +4,7 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
+
 //import java.time.LocalDateTime;  
 //import java.time.format.DateTimeFormatter;  
 
@@ -29,7 +30,7 @@ public class Reservation implements Serializable {
 	private Date end;
 
 	//bi-directional many-to-one association to Book
-	@OneToMany(mappedBy="reservation")
+	@OneToMany(mappedBy="reservation" )
 	private List<Book> books;
 
 	//bi-directional many-to-one association to User
@@ -38,6 +39,7 @@ public class Reservation implements Serializable {
 	private User user;
 
 	public Reservation() {
+	//	this.books = new List<Book>();
 	}
 
 	public Integer getIdReservation() {
@@ -72,18 +74,18 @@ public class Reservation implements Serializable {
 		this.books = books;
 	}
 
-	public Book addBook(Book book) {
+	public void addBook(Book book) {
 		getBooks().add(book);
 		book.setReservation(this);
 
-		return book;
+		//return book;
 	}
 
-	public Book removeBook(Book book) {
+	public void removeBook(Book book) {
 		getBooks().remove(book);
 		book.setReservation(null);
 
-		return book;
+		//return book;
 	}
 
 	public User getUser() {
@@ -95,11 +97,13 @@ public class Reservation implements Serializable {
 	}
 	
 	
-	public void newReservation(User cUser ) {
+	public void newReservation(User cUser) {
 		
 		this.setUser(cUser);
-	
+		
 		Date start = new java.util.Date();
+		
+		start.setTime(90000000);
 		Date end = new Date(start.getTime() + (86400000*7)); //Current time + (day milliseconds * days) 
 		this.setBeginning(start);
 		this.setEnd(end);
@@ -107,5 +111,7 @@ public class Reservation implements Serializable {
 		//this.setBooks(books);
 		
 	}
+	
+}	
+	
 
-}

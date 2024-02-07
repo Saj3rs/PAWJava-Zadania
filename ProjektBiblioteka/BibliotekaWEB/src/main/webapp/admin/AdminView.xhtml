@@ -14,7 +14,26 @@
 					action="#{userLoginBB.doLogout()}" />
 		
 	</ui:define>
-	
+	<ui:define name="options">
+	<p:column>
+				<f:facet rendered="true" name="header">
+					<h:outputText value="opcje" />
+				</f:facet>
+
+				<p:commandButton style="margin-right:1%" value="Edytuj"
+					action="#{bookListBB.editBook(p)}" />
+
+				<p:commandButton style="margin-right:1%" value="Usuń"
+					action="#{bookListBB.deleteBook(p)}" update="@form" />
+
+					<p:commandButton rendered="#{p.checkAvailable() ==0}" value="zarezerwuj"
+					action="#{reservationBB.reserveBook(p)}" update="form-table"/>
+				
+					<p:commandButton rendered="#{(p.checkAvailable() ==0) == (reservationBB.checkOwner(p)) }" disabled="#{p.checkAvailable() !=0}" value="zarezerwuj"/>
+					
+					<p:commandButton rendered="#{reservationBB.checkOwner(p) }" value="odrezerwuj"/>
+			</p:column>
+	</ui:define>
 	</ui:composition>
 </html>
 	
