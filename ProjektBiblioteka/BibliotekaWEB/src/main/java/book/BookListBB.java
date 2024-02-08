@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.primefaces.model.LazyDataModel;
+
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.context.ExternalContext;
 //import jakarta.faces.context.FacesContext;
@@ -20,6 +23,8 @@ import reservation.ReservationBB;
 
 import com.entities.Book;
 
+import Lazy.LazyBookDataModel;
+
 @Named
 @RequestScoped
 public class BookListBB {
@@ -27,7 +32,7 @@ public class BookListBB {
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 	private static final String PAGE_RESERVATION = "/bookReservation?faces-redirect=true";
 
-
+    private LazyDataModel<Book> lazyModel;
 	private String tytul;
 	private List<Book> lazyList;	
 	@Inject
@@ -67,7 +72,7 @@ public class BookListBB {
 		//int offset=1;
 		//2. Get list
 			list = BookDAO.getList(searchParams);
-		
+			this.setLazyList(list);
 		
 		
 		return list;
@@ -158,4 +163,15 @@ public class BookListBB {
 		this.lazyList = lazyList;
 	}
 	
+	
+    public void dunno() {
+    	
+        lazyModel = new LazyBookDataModel(lazyList);
+    }
+
+    public LazyDataModel<Book> getLazyModel() {
+    	this.getList();
+        lazyModel = new LazyBookDataModel(lazyList);
+        return lazyModel;
+    }
 }

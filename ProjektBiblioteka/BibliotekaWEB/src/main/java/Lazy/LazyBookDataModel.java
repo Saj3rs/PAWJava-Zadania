@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.FilterMeta;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortMeta;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -29,13 +31,13 @@ import jakarta.persistence.Query;
 import com.entities.Book;
 import book.BookListBB;
 
-@Named("Lazy")
+@Named("LazyBookModel")
 @ViewScoped
-public class Lazy implements Serializable {
+public class LazyBookDataModel extends LazyDataModel<Book>{
 
 	
-    private List<Book> lazyList;
-
+    private List<Book> datasource;
+    private LazyDataModel<Book> lazyModel;
     private Book selectedBook;
 	@Inject
 	ExternalContext extcontext;
@@ -46,31 +48,41 @@ public class Lazy implements Serializable {
    
     
 
-    public Lazy(BookListBB BookList) {
+    public LazyBookDataModel(List<Book> list) {
     	
-       this.lazyList = BookList.getList();
+       this.datasource = list;
     }
-    
-    public List<Book> load(int offset, int pageSize) {
+    @Override
+    public List<Book> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
         // apply offset & filters
-        List<Book> Books = lazyList.stream()
+        List<Book> Books = datasource.stream()
                 .skip(offset)
                 .limit(pageSize)
                 .collect(Collectors.toList());
-        
         return Books;
     }
 
-    public List<Book> getLazyList() {
-        return lazyList;
+    @Override
+    public Book getRowData(String rowKey) {
+        for (Book book : datasource) {
+            if (book.getIdBook() == Integer.parseInt(rowKey)) {
+                return book;
+            }
+        }
+
+        return null;
     }
 
-    public Book getSelectedBook() {
-        return selectedBook;
+    @Override
+    public String getRowKey(Book book) {
+        return String.valueOf(book.getIdBook());
     }
 
-    public void setSelectedBook(Book selectedBook) {
-        this.selectedBook = selectedBook;
+    @Override
+    public int count(Map<String, FilterMeta> filterBy) {
+        return (int) datasource.stream()
+                .count();
     }
+	
 }
 

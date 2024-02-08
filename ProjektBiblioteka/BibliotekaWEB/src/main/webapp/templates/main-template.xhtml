@@ -29,15 +29,18 @@
 			<ui:insert name="content">
 			<!--Postawowy widok tabeli z danymi -->
 		<h:form id="form-table" style="margin-bottom:1em;">
-
-		<p:commandButton value="Dodaj nową ksiazke"
-			action="#{bookListBB.newBook()}" style="margin-bottom:1em;" />
+		
+		<ui:insert name="addBook">
+		
+		</ui:insert>
 			<!--POTRZEBNE WYWOLANIE LAZY REKORDOW W JAKIS SPOSOB -->
-
-		<p:dataTable value="#{bookListBB.list}" var="p" paginator="true" rows="5" 
-							paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+		
+		
+		
+		<p:dataTable value="#{bookListBB.lazyModel}" var="p" paginator="true" rows="5" 
+							paginatorTemplate=" {PreviousPageLink} {NextPageLink} {RowsPerPageDropdown}"
     	    				rowsPerPageTemplate="5,10,15" selectionMode="single"
-    	 				 	rowKey="#{p.idBook}" lazy="false">
+    	 				 	lazy="true">
 		<!-- RowKey wont work witch lazy rowKey="#{p.idBook}" -->   	
 			<p:column priority="6">
 				<f:facet name="header">
@@ -70,6 +73,7 @@
 				<h:outputText rendered="#{p.checkAvailable() ==0}" value=" Dostepna" />
 			
 			</p:column>
+			
 <ui:insert name="options">
 			
 </ui:insert>
@@ -77,6 +81,7 @@
 	</h:form>
 			</ui:insert>
 		</div>
+		<h:outputText value="#{LazyBookModel.datasource == null}" />
 		<ui:insert name="footer">
 			<div id="footer" class="box bottom-space">
 				<ui:include src="/templates/footer-snippet.xhtml" />

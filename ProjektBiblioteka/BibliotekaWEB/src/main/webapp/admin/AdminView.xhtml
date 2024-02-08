@@ -14,6 +14,12 @@
 					action="#{userLoginBB.doLogout()}" />
 		
 	</ui:define>
+	
+	<ui:define name="addBook">
+		<p:commandButton value="Dodaj nową ksiazke"
+			action="#{bookListBB.newBook()}" style="margin-bottom:1em;" />
+	</ui:define>
+	
 	<ui:define name="options">
 	<p:column>
 				<f:facet rendered="true" name="header">
