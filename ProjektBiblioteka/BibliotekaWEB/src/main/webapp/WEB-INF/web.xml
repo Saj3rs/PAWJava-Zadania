@@ -25,8 +25,7 @@
     <init-param>
       <param-name>permissions</param-name>
       <param-value>
-      / : PUBLIC;
-
+/bookEdit : admin;
 /jakarta.faces.resource : PUBLIC;
 /templates : PUBLIC;
 /admin : admin;
@@ -52,7 +51,6 @@
   </filter-mapping>
 	
 	
-	
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
@@ -70,7 +68,7 @@
 	
 	
 	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>/index.xhtml</welcome-file>
 	</welcome-file-list>
 	<error-page>
 		<exception-type>jakarta.faces.application.ViewExpiredException</exception-type>
