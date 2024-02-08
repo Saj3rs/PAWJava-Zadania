@@ -71,23 +71,7 @@
 			
 			</p:column>
 <ui:insert name="options">
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="opcje" />
-				</f:facet>
-
-				<p:commandButton style="margin-right:1%" value="Edytuj"
-					action="#{bookListBB.editBook(p)}" />
-
-				<p:commandButton style="margin-right:1%" value="Usuń"
-					action="#{bookListBB.deleteBook(p)}" update="@form" />
-
-					<p:commandButton rendered="#{p.checkAvailable() ==0}" value="zarezerwuj"
-					action="#{ReservationBB.reserveBook(p)}" />
-					<p:commandButton rendered="#{p.checkAvailable() !=0}" disabled="#{p.checkAvailable() !=0}" value="zarezerwuj"
-					 />
-				
-			</p:column>
+			
 </ui:insert>
 		</p:dataTable>
 	</h:form>

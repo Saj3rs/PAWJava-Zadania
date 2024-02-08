@@ -49,7 +49,7 @@ public class RemoteClient<T> {
 		return nr;
 	}
 
-	public void setLogin(String nr) {
+	public void setNr(String nr) {
 		this.nr = nr;
 	}
 
