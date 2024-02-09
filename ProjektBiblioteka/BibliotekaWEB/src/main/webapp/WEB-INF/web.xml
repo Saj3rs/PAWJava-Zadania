@@ -27,6 +27,7 @@
       <param-value>
 
 /bookEdit.xhtml : admin;
+/bookLend.xhtml : admin;
 /jakarta.faces.resource : PUBLIC;
 /templates : PUBLIC;
 /admin : admin;

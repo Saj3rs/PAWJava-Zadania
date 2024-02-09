@@ -2,6 +2,8 @@ package com.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +47,9 @@ public class User implements Serializable {
 	private List<Reservation> reservations;
 
 	public User() {
+		if(getBooks()==null) {
+			this.books = new ArrayList<Book>();
+		}
 	}
 
 	public int getIdUser() {
@@ -106,9 +111,12 @@ public class User implements Serializable {
 	public Book addBook(Book book) {
 		getBooks().add(book);
 		book.setUser(this);
-
+		
+		//book.setReservation(null);
+		
 		return book;
 	}
+	
 
 	public Book removeBook(Book book) {
 		getBooks().remove(book);

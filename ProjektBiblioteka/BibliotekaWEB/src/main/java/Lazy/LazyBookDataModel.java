@@ -1,4 +1,5 @@
 package Lazy;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,62 +28,44 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
-
 import com.entities.Book;
 import book.BookListBB;
 
-@Named("LazyBookModel")
-@ViewScoped
-public class LazyBookDataModel extends LazyDataModel<Book>{
+public class LazyBookDataModel extends LazyDataModel<Book> {
 
-	
-    private List<Book> datasource;
-    private LazyDataModel<Book> lazyModel;
-    private Book selectedBook;
-	@Inject
-	ExternalContext extcontext;
-	
-	@Inject
-	Flash flash;
-	
-   
-    
+	private BookListBB bookListBB;
+	// private List<Book> datasource;
+	private LazyDataModel<Book> lazyModel;
+	private Book selectedBook;
 
-    public LazyBookDataModel(BookListBB BookListBB) {
-    	
-       this.datasource = BookListBB.getList();
-    }
-    @Override
-    public List<Book> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-        // apply offset & filters
-        List<Book> Books = datasource.stream()
-                .skip(offset)
-                .limit(pageSize)
-                .collect(Collectors.toList());
-        return Books;
-    }
+	public LazyBookDataModel(BookListBB bookListBB) {
+		this.bookListBB = bookListBB;
 
-    @Override
-    public Book getRowData(String rowKey) {
-        for (Book book : datasource) {
-            if (book.getIdBook() == Integer.parseInt(rowKey)) {
-                return book;
-            }
-        }
+	}
 
-        return null;
-    }
+	@Override
+	public List<Book> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
+		// apply offset & filters
+		Map<String, Object> searchParams = new HashMap<String, Object>();
 
-    @Override
-    public String getRowKey(Book book) {
-        return String.valueOf(book.getIdBook());
-    }
+		if (bookListBB.getTytul() != null && bookListBB.getTytul().length() > 0) {
+			searchParams.put("tytul", bookListBB.getTytul());
 
-    @Override
-    public int count(Map<String, FilterMeta> filterBy) {
-        return (int) datasource.stream()
-                .count();
-    }
-	
+		}
+		List<Book> books = bookListBB.getBookDAO().getList(searchParams, offset, pageSize);
+		return books;
+	}
+
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		Map<String, Object> searchParams = new HashMap<String, Object>();
+
+		if (bookListBB.getTytul() != null && bookListBB.getTytul().length() > 0) {
+			searchParams.put("tytul", bookListBB.getTytul());
+
+		}
+		return bookListBB.getBookDAO().getListCount(searchParams);
+		
+	}
+
 }
-

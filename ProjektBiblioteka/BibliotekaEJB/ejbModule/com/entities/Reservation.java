@@ -41,6 +41,7 @@ public class Reservation implements Serializable {
 	public Reservation() {
 	//	this.books = new List<Book>();
 	}
+	
 
 	public Integer getIdReservation() {
 		return this.idReservation;

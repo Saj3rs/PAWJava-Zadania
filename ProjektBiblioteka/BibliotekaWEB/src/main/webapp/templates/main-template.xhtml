@@ -37,11 +37,10 @@
 		
 		
 		
-		<p:dataTable value="#{bookListBB.getList()}" var="p" paginator="true" rows="5" 
+		<p:dataTable value="#{bookListBB.lazyModel}" var="p" paginator="true" rows="5" 
 							paginatorTemplate=" {PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"
-    	    				rowsPerPageTemplate="5,10,15" selectionMode="single"
-    	 				 	rowKey="#{p.idBook}" lazy="false"
-    	 				 	dynamic="true">
+    	    				rowsPerPageTemplate="5,10,15" 
+    	 				 	lazy="true"	>
 		<!-- RowKey wont work witch lazy rowKey="#{p.idBook}" -->   	
 			<p:column priority="6">
 				<f:facet name="header">
@@ -84,7 +83,6 @@
 	</h:form>
 			</ui:insert>
 		</div>
-		<h:outputText value="#{LazyBookModel.datasource == null}" />
 		<ui:insert name="footer">
 			<div id="footer" class="box bottom-space">
 				<ui:include src="/templates/footer-snippet.xhtml" />

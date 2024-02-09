@@ -31,6 +31,9 @@
 
 				<p:commandButton style="margin-right:1%" value="Usuń"
 					action="#{bookListBB.deleteBook(p)}" update="@form" />
+					
+				<p:commandButton style="margin-right:1%" value="Wypozycz"
+					rendered="#{(p.checkAvailable() != 2)}" action="#{bookListBB.lendBook(p)}"/>
 
 					<p:commandButton rendered="#{p.checkAvailable() ==0}" value="zarezerwuj"
 					action="#{reservationBB.reserveBook(p)}" update="form-table"/>
@@ -38,6 +41,8 @@
 					<p:commandButton rendered="#{(p.checkAvailable() ==0) == (reservationBB.checkOwner(p)) }" disabled="#{p.checkAvailable() !=0}" value="zarezerwuj"/>
 					
 					<p:commandButton rendered="#{reservationBB.checkOwner(p) }" value="odrezerwuj" action="#{reservationBB.dropReservation(p)}" update="form-table"/>
+				
+				
 			</p:column>
 	</ui:define>
 	</ui:composition>

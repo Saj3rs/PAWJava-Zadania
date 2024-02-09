@@ -29,13 +29,17 @@ import Lazy.LazyBookDataModel;
 @Named
 @RequestScoped
 public class BookListBB {
+	
+
 	private static final String PAGE_BOOK_EDIT = "/bookEdit?faces-redirect=true";
+	private static final String PAGE_BOOK_LEND = "/bookLend?faces-redirect=true";
+
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 	private static final String PAGE_RESERVATION = "/bookReservation?faces-redirect=true";
 
     private LazyDataModel<Book> lazyModel;
 	private String tytul;
-	private List<Book> lazyList;	
+//	private List<Book> lazyList;	
 	@Inject
 	ExternalContext extcontext;
 	
@@ -43,8 +47,23 @@ public class BookListBB {
 	Flash flash;
 	
 	@EJB
-	BookDAO BookDAO;
+	BookDAO bookDAO;
 	
+	@PostConstruct
+    public void init() {
+        lazyModel = new LazyBookDataModel(this);
+    }
+
+
+    public LazyDataModel<Book> getLazyModel() {
+    	//this.getList();
+    //    lazyModel = new LazyBookDataModel(this);
+        return lazyModel;
+    }
+    
+    public BookDAO getBookDAO() {
+		return bookDAO;
+	}
 	
 	public String getTytul() {
 		return tytul;
@@ -55,7 +74,7 @@ public class BookListBB {
 	}
 
 	public List<Book> getFullList(){
-		return BookDAO.getFullList();
+		return bookDAO.getFullList();
 	}
 
 	public List<Book> getList(){
@@ -72,8 +91,8 @@ public class BookListBB {
 		//int pageSize = 20;
 		//int offset=1;
 		//2. Get list
-			list = BookDAO.getList(searchParams);
-			this.setLazyList(list);
+			//list = bookDAO.getList(searchParams);
+			//this.setLazyList(list);
 		
 		
 		return list;
@@ -92,8 +111,8 @@ public class BookListBB {
 		//int pageSize = 20;
 		//int offset=1;
 		//2. Get list
-			list = BookDAO.getList(searchParams,pageSize,offset);
-		this.setLazyList(list);
+	//		list = bookDAO.getList(searchParams,pageSize,offset);
+		//this.setLazyList(list);
 		
 		
 		return list;
@@ -128,10 +147,22 @@ public class BookListBB {
 		
 		return PAGE_BOOK_EDIT;
 	}
+	
+	public String lendBook(Book book){
+		//1. Pass object through session
+		//HttpSession session = (HttpSession) extcontext.getSession(true);
+		//session.setAttribute("book", book);
+		Book send = bookDAO.find((Integer)book.getIdBook());
+		//2. Pass object through flash 
+		flash.put("book", send);
+		
+		return PAGE_BOOK_LEND;
+	}
 
 	public String deleteBook(Book book){
-		BookDAO.remove(book);
+		bookDAO.remove(book);
 		return PAGE_STAY_AT_THE_SAME;
+		//doesn't remove stray reservations
 	}
 	//public String reserveBook(Book book){
 		//ReservationBB.reserve();
@@ -151,27 +182,10 @@ public class BookListBB {
 	        return Books;
 	    }
 
-	public List<Book> getLazyList() {
-		if(this.lazyList==null) {
-			this.getList(); 
-				return lazyList;
-			
-		}
-		return lazyList;
-	}
-
-	public void setLazyList(List<Book> lazyList) {
-		this.lazyList = lazyList;
-	}
 	
 	
-    
-
-    public LazyDataModel<Book> getLazyModel() {
-    	//this.getList();
-        lazyModel = new LazyBookDataModel(this);
-        return lazyModel;
-    }
+	
+	
     
     
 }

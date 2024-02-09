@@ -8,7 +8,7 @@
 
 
 <f:metadata>
-    <f:viewAction action="#{bookEditBB.onLoad()}" />
+    <f:viewAction action="#{bookLendBB.onLoad()}" />
 </f:metadata>
 
 <h:head>
@@ -20,28 +20,28 @@
 
 	<p:panel toggleable="true" header="Wypozyczenie ksiazki rekordu">
 
-		<h:form rendered="#{bookEditBB.book != null}">
+		<h:form rendered="#{bookEditBB.book != null}" action="#">
 			<h:panelGrid columns="2" cellpadding="5">
 
 			
 
-				<h:outputLabel for="p-tytul" value="tytul:" />
-				<p:OutoutText id="p-tytul" value="#{bookEditBB.book.tytul}">
-				</p:OutputText>
+				<h:outputText id="p-tytul" value="Tytul wypozyczanej ksiazki: #{bookLendBB.loaded.tytul}"/>
+				
 				<p:message for="p-tytul" display="icon"/>
 
-				<h:outputLabel for="p-reservationUser" value="Wypozycz uzytkownikowi" />
-				<p:inputText id="p-gatunek" value="#{bookEditBB.book.reservation.user.idUser}">
+				<h:outputLabel for="p-idUser" value="Nr karty czytelnika: " />
+				<p:inputText name="id" id="p-idUser" value="#{bookLendBB.id}">
 				</p:inputText>
-				<p:message for="p-gatunek" display="icon"/>
+				
+				<p:message for="p-idUser" display="icon"/>
 				</h:panelGrid>
 
 			<p:messages id="msgs" />
 
-			<p:commandButton value="Zapisz" action="#{bookEditBB.saveData()}"
+			<p:commandButton value="Zapisz" action="#{bookLendBB.setId()}" 
 				style="margin-right: 1em;" update="@form" />
 
-			<p:button value="Anuluj" outcome="index" />
+			<p:button value="Anuluj" outcome="/admin/AdminView" />
 		</h:form>
 
 	</p:panel>
