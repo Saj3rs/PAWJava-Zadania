@@ -112,6 +112,15 @@ public class Reservation implements Serializable {
 		
 	}
 	
+	public boolean validReservation(long timer) {
+		Date expiry = this.getEnd();
+		
+		expiry.setTime(expiry.getTime()+86400000); //Giving 24h of grace period
+		Date current = new java.util.Date();
+		current.setTime(timer);
+		return current.before(expiry);
+	}
+	
 }	
 	
 

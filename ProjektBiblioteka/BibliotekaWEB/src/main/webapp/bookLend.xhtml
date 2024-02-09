@@ -18,21 +18,20 @@
 
 <h:body>
 
-	<p:panel toggleable="true" header="Edycja rekordu">
+	<p:panel toggleable="true" header="Wypozyczenie ksiazki rekordu">
 
 		<h:form rendered="#{bookEditBB.book != null}">
-			<h:panelGrid columns="3" cellpadding="5">
+			<h:panelGrid columns="2" cellpadding="5">
 
 			
 
 				<h:outputLabel for="p-tytul" value="tytul:" />
-				<p:inputText id="p-tytul" value="#{bookEditBB.book.tytul}"
-					required="true" requiredMessage="Podaj tytul">
-				</p:inputText>
+				<p:OutoutText id="p-tytul" value="#{bookEditBB.book.tytul}">
+				</p:OutputText>
 				<p:message for="p-tytul" display="icon"/>
 
-				<h:outputLabel for="p-gatunek" value="gatunek:" />
-				<p:inputText id="p-gatunek" value="#{bookEditBB.book.gatunek}">
+				<h:outputLabel for="p-reservationUser" value="Wypozycz uzytkownikowi" />
+				<p:inputText id="p-gatunek" value="#{bookEditBB.book.reservation.user.idUser}">
 				</p:inputText>
 				<p:message for="p-gatunek" display="icon"/>
 				</h:panelGrid>
@@ -42,7 +41,7 @@
 			<p:commandButton value="Zapisz" action="#{bookEditBB.saveData()}"
 				style="margin-right: 1em;" update="@form" />
 
-			<p:button value="Anuluj" outcome="/admin/AdminView" />
+			<p:button value="Anuluj" outcome="index" />
 		</h:form>
 
 	</p:panel>

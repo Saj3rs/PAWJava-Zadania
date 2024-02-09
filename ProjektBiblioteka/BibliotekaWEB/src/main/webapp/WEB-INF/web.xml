@@ -25,7 +25,8 @@
     <init-param>
       <param-name>permissions</param-name>
       <param-value>
-/bookEdit : admin;
+
+/bookEdit.xhtml : admin;
 /jakarta.faces.resource : PUBLIC;
 /templates : PUBLIC;
 /admin : admin;

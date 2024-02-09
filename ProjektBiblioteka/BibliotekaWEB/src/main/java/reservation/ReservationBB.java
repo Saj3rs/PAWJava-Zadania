@@ -85,14 +85,36 @@ public class ReservationBB implements Serializable {
 		reservationDAO.remove(res);
 		return PAGE_STAY_AT_THE_SAME;
 	}
+	
+	public boolean checkExpired(Integer bookId) {
+		HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
+		long timer = session.getLastAccessedTime();	
+		Book book = bookDAO.find(bookId);
+		tempRes = book.getReservation();
+		if(tempRes!=null) {
+			if(!tempRes.validReservation(timer)) {	
+				book.setReservation(null);				
+				bookDAO.merge(book);					
+				reservationDAO.remove(tempRes);			
+													
+			}
+		}
+		return false;
+	}	
+	
+		
 	public boolean checkOwner(Book book) {
 		HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;
 		User currentUser = (User) session.getAttribute("cUser");
 		tempRes = book.getReservation();
+		
 		if(tempRes==null) return false;
 		else if(tempRes.getUser().getIdUser()==currentUser.getIdUser())return true;
 		else return false;
 	}
+	
+	
+	
 	//public void onLoad() throws IOException {
 		// 1. load Reservation passed through session
 		// HttpSession session = (HttpSession) context.getExternalContext().getSession(true) ;

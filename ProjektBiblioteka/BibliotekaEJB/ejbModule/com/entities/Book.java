@@ -88,6 +88,7 @@ public class Book implements Serializable {
 		this.reservation = reservation;
 	}
 	public int checkAvailable() {
+		
 		if(user!=null){return 2;}
 		else if (reservation !=null) {return 1;}
 		else {return 0;}

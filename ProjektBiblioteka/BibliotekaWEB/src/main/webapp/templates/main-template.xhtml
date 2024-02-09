@@ -37,10 +37,11 @@
 		
 		
 		
-		<p:dataTable value="#{bookListBB.lazyModel}" var="p" paginator="true" rows="5" 
-							paginatorTemplate=" {PreviousPageLink} {NextPageLink} {RowsPerPageDropdown}"
+		<p:dataTable value="#{bookListBB.getList()}" var="p" paginator="true" rows="5" 
+							paginatorTemplate=" {PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"
     	    				rowsPerPageTemplate="5,10,15" selectionMode="single"
-    	 				 	lazy="true">
+    	 				 	rowKey="#{p.idBook}" lazy="false"
+    	 				 	dynamic="true">
 		<!-- RowKey wont work witch lazy rowKey="#{p.idBook}" -->   	
 			<p:column priority="6">
 				<f:facet name="header">
@@ -61,7 +62,9 @@
 					<h:outputText value="Gatunek" />
 				</f:facet>
 				<h:outputText value="#{p.gatunek}" />
+				<h:outputText rendered="#{reservationBB.checkExpired(p.idBook)}"  />
 			</p:column>
+			
 			
 			<p:column>
 				<f:facet name="header">

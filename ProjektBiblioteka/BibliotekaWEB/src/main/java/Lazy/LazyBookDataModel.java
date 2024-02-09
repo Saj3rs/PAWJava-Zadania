@@ -48,9 +48,9 @@ public class LazyBookDataModel extends LazyDataModel<Book>{
    
     
 
-    public LazyBookDataModel(List<Book> list) {
+    public LazyBookDataModel(BookListBB BookListBB) {
     	
-       this.datasource = list;
+       this.datasource = BookListBB.getList();
     }
     @Override
     public List<Book> load(int offset, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {

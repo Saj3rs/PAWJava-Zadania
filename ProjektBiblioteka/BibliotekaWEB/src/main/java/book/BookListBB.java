@@ -22,6 +22,7 @@ import com.dao.BookDAO;
 import reservation.ReservationBB;
 
 import com.entities.Book;
+import com.entities.Reservation;
 
 import Lazy.LazyBookDataModel;
 
@@ -164,14 +165,13 @@ public class BookListBB {
 	}
 	
 	
-    public void dunno() {
-    	
-        lazyModel = new LazyBookDataModel(lazyList);
-    }
+    
 
     public LazyDataModel<Book> getLazyModel() {
-    	this.getList();
-        lazyModel = new LazyBookDataModel(lazyList);
+    	//this.getList();
+        lazyModel = new LazyBookDataModel(this);
         return lazyModel;
     }
+    
+    
 }
