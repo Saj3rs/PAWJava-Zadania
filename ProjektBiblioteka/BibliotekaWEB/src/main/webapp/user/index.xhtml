@@ -8,8 +8,8 @@
 	
 	<ui:composition template="/templates/main-template.xhtml">
 	<ui:define name="header" >
-		<h1 >Reader TEST HEADER</h1>
-		<h:outputText value="Check if user loaded into session #{userSessionBB.cUser.imie}"/>
+		<h1 >Zalogowano jako <h:outputText value="#{userSessionBB.cUser.imie} #{userSessionBB.cUser.nazwisko}"/></h1>
+
 		<p:commandButton style="margin-right:1%" value="Log Out"
 					action="#{userLoginBB.doLogout()}" />
 		

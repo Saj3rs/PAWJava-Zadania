@@ -164,6 +164,15 @@ public class BookListBB {
 		return PAGE_STAY_AT_THE_SAME;
 		//doesn't remove stray reservations
 	}
+	
+	public void returnBook(Book book){
+		
+		Book returned = bookDAO.find((Integer)book.getIdBook());
+		returned.setUser(null);
+		bookDAO.merge(returned);
+		
+		
+	}
 	//public String reserveBook(Book book){
 		//ReservationBB.reserve();
 		//flash.put("book", book);

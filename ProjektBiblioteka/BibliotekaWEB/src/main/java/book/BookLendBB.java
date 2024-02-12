@@ -104,6 +104,10 @@ public class BookLendBB implements Serializable {
 		return PAGE_BOOK_LIST;
 	}
 	
+	public void returnBook() {
+		
+	}
+
 
 
 	

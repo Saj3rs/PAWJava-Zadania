@@ -8,7 +8,7 @@
 	
 	<ui:composition template="/templates/main-template.xhtml">
 	<ui:define name="header" >
-		<h1 >ADMIN TEST HEADER</h1>
+		<h1 >Zalogowano jako <h:outputText value="#{userSessionBB.cUser.imie} #{userSessionBB.cUser.nazwisko}"/></h1>
 		
 		<p:commandButton style="margin-right:1%" value="Log Out"
 					action="#{userLoginBB.doLogout()}" />
@@ -34,9 +34,14 @@
 					
 				<p:commandButton style="margin-right:1%" value="Wypozycz"
 					rendered="#{(p.checkAvailable() != 2)}" action="#{bookListBB.lendBook(p)}"/>
-
+				
+				<p:commandButton style="margin-right:1%" value="Zwroc" update="form-table"
+					rendered="#{(p.checkAvailable() == 2)}" action="#{bookListBB.returnBook(p)}"/>
+				
+				
 					<p:commandButton rendered="#{p.checkAvailable() ==0}" value="zarezerwuj"
 					action="#{reservationBB.reserveBook(p)}" update="form-table"/>
+					
 				
 					<p:commandButton rendered="#{(p.checkAvailable() ==0) == (reservationBB.checkOwner(p)) }" disabled="#{p.checkAvailable() !=0}" value="zarezerwuj"/>
 					
